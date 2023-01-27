@@ -1,6 +1,6 @@
 import { call, takeLatest } from "redux-saga/effects";
 import { login, logout, register } from "./slice";
-import authService from "../../services/AuthService";
+import { authService } from "../../services/AuthService";
 
 function* handleRegister(action) {
   try {

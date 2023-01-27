@@ -1,6 +1,6 @@
-import ApiService from "./ApiService";
+import HttpService from "./HttpService";
 
-class AuthService extends ApiService {
+class AuthService extends HttpService {
   async login(data) {
     const response = await this.client.post("/auth/login", data);
     this.setLoginTokenAndredirectToAuthPage(response.data.access_token);

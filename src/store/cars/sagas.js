@@ -1,5 +1,14 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import { carService } from "../../services/CarService";
+import {
+  createCar,
+  deleteCar,
+  editCar,
+  getCar,
+  getCars,
+  setCar,
+  setCars,
+} from "./slice";
 
 function* handleGetCars(action) {
   try {
@@ -22,7 +31,7 @@ function* handleGetCar(action) {
 function* handleCreateCar(action) {
   try {
     const newCar = yield call(carService.createCar, action.payload);
-    yield put(setCarsWithNewCar(newCar));
+    yield put(createCar(newCar));
   } catch (error) {
     alert("none of the fields should be blank");
   }
@@ -35,7 +44,7 @@ function* handleEditCar(action) {
       action.payload.newCar.carId,
       action.payload.newCar
     );
-    yield put(setCarsWithNewCars(car));
+    yield put(editCar(car));
   } catch (error) {
     alert("none of the fields should be blank");
   }
