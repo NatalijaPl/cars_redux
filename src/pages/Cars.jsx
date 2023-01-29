@@ -1,26 +1,24 @@
 import React from "react";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCars } from "../store/cars/slice";
-import { SingleCar } from "./SingleCar";
+import { getCarsAction } from "../store/cars/slice";
 import { selectCars } from "../store/cars/selectors";
+import { CarDeteils } from "../components/CarDetails";
 
 export const Cars = () => {
-  const dispatch = useDispatch();
-  const { id } = useParams();
   const cars = useSelector(selectCars);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCars(id));
-  }, [id, dispatch]);
+    dispatch(getCarsAction());
+  }, [dispatch]);
 
   return (
     <div>
       <ul>
-        {/* {cars.map((car) => (
+        {cars.map((car) => (
           <li key={car.id}>
-            <SingleCar
+            <CarDeteils
               id={car.id}
               brand={car.brand}
               model={car.model}
@@ -32,13 +30,44 @@ export const Cars = () => {
               number_of_doors={car.number_of_doors}
             />
           </li>
-        ))} */}
-        <ul>
-          {cars.data.map((car) => (
-            <SingleCar key={car.id} car={car} />
-          ))}
-        </ul>
+        ))}
       </ul>
     </div>
   );
 };
+
+// import { useEffect } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { makeSelectMovies } from "../store/movies/selector";
+// import { getAllMoviesAction } from "../store/movies/slice";
+// import { MovieDetails } from "../components/MovieDetails.component";
+// import { redirectToEdit } from "../utils/redirect";
+
+// export const MoviesPage = () => {
+//   const movies = useSelector(makeSelectMovies);
+//   const dispatch = useDispatch();
+
+//   useEffect(() => {
+//     dispatch(getAllMoviesAction());
+//   }, [dispatch]);
+
+//   return (
+//     <ul>
+//       {movies.map((movie) => (
+//         <li key={movie.id}>
+//           <MovieDetails
+//             id={movie.id}
+//             title={movie.title}
+//             director={movie.director}
+//             imageUrl={movie.imageUrl}
+//             duration={movie.duration}
+//             releaseDate={movie.releaseDate}
+//             genres={movie.genres}
+//             linkHeading={true}
+//             editMovie={redirectToEdit}
+//           />
+//         </li>
+//       ))}
+//     </ul>
+//   );
+// };

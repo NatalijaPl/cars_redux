@@ -1,31 +1,21 @@
-import HttpService from "./HttpService";
+import axios from "axios";
 
-class CarService extends HttpService {
-  getCars = async () => {
-    const { data } = await this.client.get(`/cars`);
-    console.log(data);
-    return data;
-  };
-
-  getCar = async (id) => {
-    const { data } = await this.client.get(`/cars/${id}`);
-    console.log(data);
-    return data;
-  };
-
-  createCar = async (carData) => {
-    const { data } = await this.client.post("/cars", carData);
-    return data;
-  };
-
-  editCar = async (carId, car) => {
-    const { data } = await this.client.put(`/cars/${carId}`, car);
-    return data;
-  };
-
-  deleteCar = async (car) => {
-    const { data } = await this.client.delete(`/cars/${car}`);
-    return data;
-  };
+class CarService {
+  async getCars() {
+    return await axios.get("http://localhost:8000/api/cars");
+  }
+  async getCar(id) {
+    return await axios.get(`http://localhost:8000/api/cars/${id}`);
+  }
+  async createCar(movie) {
+    await axios.post("http://localhost:8000/api/cars", movie);
+  }
+  async editCar(id, movie) {
+    await axios.put(`http://localhost:8000/api/cars/${id}`, movie);
+  }
+  async deleteCar(id) {
+    await axios.delete(`http://localhost:8000/api/cars/${id}`);
+  }
 }
+
 export const carService = new CarService();

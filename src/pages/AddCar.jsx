@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { selectCars } from "../store/cars/selectors";
-import { createCar, editCar } from "../store/cars/slice";
+import { createCarAction, editCarAction } from "../store/cars/slice";
 
 export const AddCar = () => {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ export const AddCar = () => {
         return;
       }
       dispatch(
-        editCar({
+        editCarAction({
           newCar: {
             carId: id,
             brand: newCar.brand,
@@ -46,7 +46,7 @@ export const AddCar = () => {
       );
       history.push(`/cars/${retrievedCar.id}`);
     } else {
-      dispatch(createCar(newCar));
+      dispatch(createCarAction(newCar));
       history.push("/cars");
     }
   };
@@ -64,6 +64,7 @@ export const AddCar = () => {
       ...newCar,
     });
   }, []);
+
   useEffect(() => {
     if (id) {
       setNewCar(retrievedCar);

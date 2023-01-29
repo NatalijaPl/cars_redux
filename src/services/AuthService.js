@@ -1,36 +1,36 @@
-import HttpService from "./HttpService";
+// import { httpService } from "./HttpService";
 
-class AuthService extends HttpService {
-  async login(data) {
-    const response = await this.client.post("/auth/login", data);
-    this.setLoginTokenAndredirectToAuthPage(response.data.access_token);
+// class AuthService extends httpService {
+//   async login(data) {
+//     const response = await this.client.post("/auth/login", data);
+//     this.setLoginTokenAndredirectToAuthPage(response.data.access_token);
 
-    return response;
-  }
+//     return response;
+//   }
 
-  async logout() {
-    await this.client.post("/auth/logout", {}, { headers: this.getHeaders() });
-    window.localStorage.removeItem("loginToken");
-    window.location.replace("/login");
-  }
+//   async logout() {
+//     await this.client.post("/auth/logout", {}, { headers: this.getHeaders() });
+//     window.localStorage.removeItem("loginToken");
+//     window.location.replace("/login");
+//   }
 
-  async register(data) {
-    const response = await this.client.post("/auth/register", data);
-    this.setLoginTokenAndredirectToAuthPage(response.data.access_token);
+//   async register(data) {
+//     const response = await this.client.post("/auth/register", data);
+//     this.setLoginTokenAndredirectToAuthPage(response.data.access_token);
 
-    return response;
-  }
+//     return response;
+//   }
 
-  getHeaders() {
-    return {
-      Authorization: `Bearer ${window.localStorage.getItem("loginToken")}`,
-    };
-  }
+//   getHeaders() {
+//     return {
+//       Authorization: `Bearer ${window.localStorage.getItem("loginToken")}`,
+//     };
+//   }
 
-  setLoginTokenAndredirectToAuthPage(token) {
-    window.localStorage.setItem("loginToken", token);
-    window.location.replace("/cars");
-  }
-}
+//   setLoginTokenAndredirectToAuthPage(token) {
+//     window.localStorage.setItem("loginToken", token);
+//     window.location.replace("/cars");
+//   }
+// }
 
-export const authService = new AuthService();
+// export const authService = new AuthService();

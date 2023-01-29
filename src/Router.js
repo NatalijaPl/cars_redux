@@ -11,7 +11,7 @@ export default function Router() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/">
+        <Route exact path="/cars">
           <Cars />
         </Route>
         <Route path="/cars/:id">

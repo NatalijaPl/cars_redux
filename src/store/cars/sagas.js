@@ -1,82 +1,75 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, all, fork, takeEvery } from "redux-saga/effects";
 import { carService } from "../../services/CarService";
-import {
-  createCar,
-  deleteCar,
-  editCar,
-  getCar,
-  getCars,
-  setCar,
-  setCars,
-} from "./slice";
+import { setCarAction, setCarsAction } from "./slice";
 
-function* handleGetCars(action) {
+function* getAllCars() {
   try {
-    const cars = yield call(carService.getCars, action.payload);
-    yield put(setCars(cars));
-  } catch (error) {
-    alert(error.message);
+    const response = yield call(carService.getCars);
+    yield put(setCarsAction(response.data));
+  } catch (err) {
+    console.error(err);
   }
 }
 
-function* handleGetCar(action) {
+function* getAllCarsSagaWatcher() {
+  yield takeEvery("cars/getCarsAction", getAllCars);
+}
+
+function* getSingleCar({ payload }) {
   try {
-    const car = yield call(carService.getCar, action.payload);
-    yield put(setCar(car));
-  } catch (error) {
-    alert(error.message);
+    const response = yield call(carService.getCar, payload);
+    yield put(setCarAction(response.data));
+  } catch (err) {
+    console.error(err);
   }
 }
 
-function* handleCreateCar(action) {
+function* getSingleCarSagaWatcher() {
+  yield takeEvery("cars/getCarAction", getSingleCar);
+}
+
+function* createNewCar({ payload }) {
   try {
-    const newCar = yield call(carService.createCar, action.payload);
-    yield put(createCar(newCar));
-  } catch (error) {
-    alert("none of the fields should be blank");
+    yield call(carService.createCar, payload);
+  } catch (err) {
+    console.error(err);
   }
 }
 
-function* handleEditCar(action) {
+function* getCreateCarSagaWatcher() {
+  yield takeEvery("cars/createCarAction", createNewCar);
+}
+
+function* deleteSingleCar({ payload }) {
   try {
-    const car = yield call(
-      carService.editCar,
-      action.payload.newCar.carId,
-      action.payload.newCar
-    );
-    yield put(editCar(car));
-  } catch (error) {
-    alert("none of the fields should be blank");
+    yield call(carService.deleteCar, payload);
+  } catch (err) {
+    console.error(err);
   }
 }
 
-function* handleDeleteCar(action) {
+function* getDeleteSingleCarSagaWatcher() {
+  yield takeEvery("cars/deleteCarAction", deleteSingleCar);
+}
+
+function* editSingleCar({ payload }) {
   try {
-    console.log(action);
-    yield call(carService.deleteCar, action.payload);
-    const cars = yield call(carService.getCars, 1, null, null);
-    yield put(setCars(cars));
-  } catch (error) {
-    alert(error.message);
+    yield call(carService.editCar, payload.id, payload.data);
+  } catch (err) {
+    console.error(err);
   }
 }
 
-export function* watchGetCars() {
-  yield takeLatest(getCars.type, handleGetCars);
+function* getEditSingleCarSagaWatcher() {
+  yield takeEvery("cars/editCarAction", editSingleCar);
 }
 
-export function* watchGetCar() {
-  yield takeLatest(getCar.type, handleGetCar);
-}
-
-export function* watchCreateCar() {
-  yield takeLatest(createCar.type, handleCreateCar);
-}
-
-export function* watchEditCar() {
-  yield takeLatest(editCar.type, handleEditCar);
-}
-
-export function* watchDeleteCar() {
-  yield takeLatest(deleteCar.type, handleDeleteCar);
+export default function* rootMoviesSaga() {
+  yield all([
+    fork(getAllCarsSagaWatcher),
+    fork(getSingleCarSagaWatcher),
+    fork(getCreateCarSagaWatcher),
+    fork(getDeleteSingleCarSagaWatcher),
+    fork(getEditSingleCarSagaWatcher),
+  ]);
 }

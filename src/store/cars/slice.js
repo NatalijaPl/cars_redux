@@ -1,51 +1,33 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const middlewareActions = {
-  getCars: () => {},
-  getCar: () => {},
-  createCar: () => {},
-  editCar: () => {},
-  deleteCar: () => {},
-};
-
-const car = createSlice({
+const cars = createSlice({
   name: "cars",
   initialState: {
-    model: "",
-    brand: "",
-    year: "",
-    max_speed: "",
-    is_automatic: "",
-    engine: "",
-    number_of_doors: "",
+    cars: [],
+    car: {},
   },
   reducers: {
-    setCars: (state, action) => {
-      state.cars = action.payload;
+    getCarsAction: () => {},
+    setCarsAction: (state, { payload }) => {
+      state.cars = payload;
     },
-    setCar: (state, action) => {
-      state.car = action.payload;
+    getCarAction: () => {},
+    setCarAction: (state, { payload }) => {
+      state.car = payload;
     },
-    createCar: (state, actions) => {
-      state.model = actions.payload.model;
-      state.brand = actions.payload.brand;
-      state.year = actions.payload.year;
-      state.max_speed = actions.payload.max_speed;
-      state.is_automatic = actions.payload.is_automatic;
-      state.engine = actions.payload.engine;
-      state.number_of_doors = actions.payload.number_of_doors;
-    },
-    ...middlewareActions,
+    createCarAction: () => {},
+    deleteCarAction: () => {},
+    editCarAction: () => {},
   },
 });
 
 export const {
-  getCars,
-  getCar,
-  setCars,
-  setCar,
-  createCar,
-  editCar,
-  deleteCar,
-} = car.actions;
-export default car.reducer;
+  getCarsAction,
+  setCarsAction,
+  getCarAction,
+  setCarAction,
+  createCarAction,
+  deleteCarAction,
+  editCarAction,
+} = cars.actions;
+export default cars.reducer;
