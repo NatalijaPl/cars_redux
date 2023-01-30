@@ -7,11 +7,11 @@ class CarService {
   async getCar(id) {
     return await axios.get(`http://localhost:8000/api/cars/${id}`);
   }
-  async createCar(movie) {
-    await axios.post("http://localhost:8000/api/cars", movie);
+  async createCar(car) {
+    await axios.post("http://localhost:8000/api/cars", car);
   }
-  async editCar(id, movie) {
-    await axios.put(`http://localhost:8000/api/cars/${id}`, movie);
+  async editCar(id, car) {
+    await axios.put(`http://localhost:8000/api/cars/${id}`, car);
   }
   async deleteCar(id) {
     await axios.delete(`http://localhost:8000/api/cars/${id}`);

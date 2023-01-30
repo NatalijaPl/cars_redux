@@ -22,16 +22,19 @@ export const SingleCar = () => {
   };
 
   return (
-    <CarDeteils
-      id={car.id}
-      brand={car.brand}
-      model={car.model}
-      year={car.year}
-      max_speed={car.max_speed}
-      is_automatic={car.is_automatic}
-      engine={car.engine}
-      number_of_doors={car.number_of_doors}
-      handleDeleteCar={handleDeleteCar}
-    />
+    <div>
+      <CarDeteils
+        id={car.id}
+        brand={car.brand}
+        model={car.model}
+        year={car.year}
+        max_speed={car.max_speed}
+        is_automatic={car.is_automatic}
+        engine={car.engine}
+        number_of_doors={car.number_of_doors}
+        handleDeleteCar={handleDeleteCar}
+      />
+      <button onClick={handleDeleteCar}>delete</button>
+    </div>
   );
 };
